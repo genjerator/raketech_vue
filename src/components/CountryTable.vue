@@ -48,7 +48,7 @@ export default {
     async fetchCountries() {
       try {
         if(authStore.isAuthenticated) {
-          const { data: { data } } = await axios.get('http://localhost/api/v1/countries');
+          const { data: { data } } = await axios.get(import.meta.env.VITE_COUNTRY_API);
           this.countries = data;
         }
       } catch (error) {
