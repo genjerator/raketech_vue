@@ -2,7 +2,11 @@
   <div>
     <h2 class="text-3xl font-semibold mb-4 text-center">Country List</h2>
     <div v-if="authStore.isAuthenticated">
-    <table class="min-w-full border border-gray-200">
+      <div v-if="error" class="bg-red-500 text-white p-4">
+        {{ error.message }}
+      </div>
+
+      <table class="min-w-full border border-gray-200">
       <thead>
       <tr>
         <th class="px-4 py-2 text-left">Flag</th>
@@ -10,6 +14,7 @@
       </tr>
       </thead>
       <tbody>
+
       <tr v-for="country in countries" :key="country.name">
         <td class="px-4 py-2">
           <img :src="country.flag" :alt="country.name + ' flag'" class="w-24 h-16 shadow-lg">
@@ -36,9 +41,8 @@ export default {
   },
   data() {
     return {
-      countries: [
-
-      ]
+      countries: [],
+      error:null
     };
   },
   mounted() {
@@ -52,7 +56,8 @@ export default {
           this.countries = data;
         }
       } catch (error) {
-        console.error('Error fetching countries:', error);
+        this.error = {'message':'Country API is not available'}
+
       }
     }
   }
